@@ -1,0 +1,17 @@
+{
+    "name": "cesarfarkas/teste-crud-api",
+    "description": "Projeto desenvolvido para um teste de emprego para empresa zarb solution",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Cesarfarkas\\TesteCrudApi\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "César Farkas",
+            "email": "farkascesar@hotmail.com"
+        }
+    ],
+    "require": {}
+}
