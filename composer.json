@@ -5,7 +5,10 @@
     "autoload": {
         "psr-4": {
             "TesteCrudApi\\": "src/"
-        }
+        },
+        "files": [
+            "./src/App/config.php"
+        ]
     },
     "authors": [
         {
@@ -13,5 +16,7 @@
             "email": "farkascesar@hotmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
 }

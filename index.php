@@ -1,5 +1,3 @@
 <?php
 
-require "vendor/autoload.php";
-
-echo "<h1>HELLO WORLD!</h1>";
+require __DIR__."/vendor/autoload.php";
