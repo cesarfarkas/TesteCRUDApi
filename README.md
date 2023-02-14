@@ -2,9 +2,11 @@
 Teste de emprego feito para Zarb Solution
 
 ## O desafio
+
 **TABELAS NECESSÁRIAS:**
+
 usuarios
-------
+=========
 id
 nome
 cpf
@@ -21,12 +23,11 @@ preco
 
 
 produtos_usuarios
-======
+=========
 id_produto
 id_usuario
 
 ===============
-
 **ATIVIDADE**
 
 Dados as tabelas acima faça ( PHP puro  - sem framework) :
