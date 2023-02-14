@@ -29,8 +29,6 @@ function load(string $controller, string $action)
 $routes = [
     "GET" => [
         "/" => fn() => load("HomeController","index")
-    ],
-    "POST" => [
     ]
 ];
 
