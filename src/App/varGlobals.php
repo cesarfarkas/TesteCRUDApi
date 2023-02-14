@@ -8,3 +8,5 @@ define("DB_PASS",$_ENV['DB_PASS']);
 
 #URL BASE
 define("URL_BASE",$_ENV['URL_BASE']);
+
+#teste

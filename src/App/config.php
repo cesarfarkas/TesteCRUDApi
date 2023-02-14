@@ -7,3 +7,5 @@ $dotenv->load();
 
 require __DIR__."/varGlobals.php";
 require __DIR__."/routes/router.php";
+
+#teste
