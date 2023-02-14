@@ -17,14 +17,14 @@ Teste de emprego feito para Zarb Solution
 
 **produtos**
 
--id
--nome
--preco
+- id
+- nome
+- preco
 
 **produtos_usuarios**
 
--id_produto
--id_usuario
+- id_produto
+- id_usuario
 
 ===============
 **ATIVIDADE**
