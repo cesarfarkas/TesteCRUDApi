@@ -26,14 +26,14 @@ Teste de emprego feito para Zarb Solution
 - id_produto
 - id_usuario
 
-===============
-**ATIVIDADE**
+==============================================================
 
 Dados as tabelas acima faça ( PHP puro  - sem framework) :
-1- Criar as tabelas e fazer um CRUD de usuários. Pode usar bootstrap ou similar
-2- Inserir registros nas tabelas produtos e produtos_usuarios de forma que facilite o teste.
-3- Api: Criar endpoint que recebe um username e password e valida se há algum usuário com cpf ou email que esteja de acordo com o username. Se válido, retornar dados do usuário..
-4- Api: Criar endpoint que recebe um id de usuário e retorna os dados dos mesmo juntamente com os produtos que ele possui
+
+1. Criar as tabelas e fazer um CRUD de usuários. Pode usar bootstrap ou similar
+2. Inserir registros nas tabelas produtos e produtos_usuarios de forma que facilite o teste.
+3. Api: Criar endpoint que recebe um username e password e valida se há algum usuário com cpf ou email que esteja de acordo com o username. Se válido, retornar dados do usuário..
+4. Api: Criar endpoint que recebe um id de usuário e retorna os dados dos mesmo juntamente com os produtos que ele possui
 
 
 ## Como Rodar o projeto
