@@ -6,13 +6,13 @@ Teste de emprego feito para Zarb Solution
 **TABELAS NECESSÁRIAS:**
 
 **usuarios**
-*id
-*nome
-*cpf
-*email
-*senha
-*created_at
-*updated_at
+-id
+-nome
+-cpf
+-email
+-senha
+-created_at
+-updated_at
 
 **produtos**
 *id
