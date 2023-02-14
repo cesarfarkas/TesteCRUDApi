@@ -6,7 +6,7 @@ Teste de emprego feito para Zarb Solution
 **TABELAS NECESSÁRIAS:**
 
 **usuarios**
------------------------
+
 - id
 - nome
 - cpf
@@ -16,13 +16,15 @@ Teste de emprego feito para Zarb Solution
 - updated_at
 
 **produtos**
-*id
-*nome
-*preco
+
+-id
+-nome
+-preco
 
 **produtos_usuarios**
-*id_produto
-*id_usuario
+
+-id_produto
+-id_usuario
 
 ===============
 **ATIVIDADE**
