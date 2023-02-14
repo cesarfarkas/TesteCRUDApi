@@ -37,8 +37,8 @@ Dados as tabelas acima faça ( PHP puro  - sem framework) :
 
 
 ## Como Rodar o projeto
-1-Inicie o servidor PHP
-2-Baixe os arquivos desse repositório
-3-Importe o SQL testecrudapi.sql que está no diretório raiz
-4-Configure o arquivo .env fazendo uma cópia do .env-example
-5-Acesse a URL do projeto no seu computador
+1. Inicie o servidor PHP
+2. Baixe os arquivos desse repositório
+3. Importe o SQL testecrudapi.sql que está no diretório raiz
+4. Configure o arquivo .env fazendo uma cópia do .env-example
+5. Acesse a URL do projeto no seu computador
