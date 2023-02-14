@@ -5,27 +5,23 @@ Teste de emprego feito para Zarb Solution
 
 **TABELAS NECESSÁRIAS:**
 
-usuarios
-=========
-id
-nome
-cpf
-email
-senha
-created_at
-updated_at
+**usuarios**
+*id
+*nome
+*cpf
+*email
+*senha
+*created_at
+*updated_at
 
-produtos
-=========
-id
-nome
-preco
+**produtos**
+*id
+*nome
+*preco
 
-
-produtos_usuarios
-=========
-id_produto
-id_usuario
+**produtos_usuarios**
+*id_produto
+*id_usuario
 
 ===============
 **ATIVIDADE**
