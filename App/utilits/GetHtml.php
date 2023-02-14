@@ -1,5 +1,5 @@
 <?php
-namespace TesteCrudApi\App\Utilits;
+namespace TesteCrudApi\Utilits;
 
 class GetHtml
 {

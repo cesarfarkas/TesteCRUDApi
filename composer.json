@@ -4,10 +4,10 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "TesteCrudApi\\": "src/"
+            "TesteCrudApi\\": "App"
         },
         "files": [
-            "./src/app/config.php"
+            "./App/config.php"
         ]
     },
     "authors": [
