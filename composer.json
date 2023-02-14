@@ -7,7 +7,7 @@
             "TesteCrudApi\\": "src/"
         },
         "files": [
-            "./src/App/config.php"
+            "./src/app/config.php"
         ]
     },
     "authors": [
