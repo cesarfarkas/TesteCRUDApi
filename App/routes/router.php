@@ -1,6 +1,6 @@
 <?php
 
-function load(string $controller, string $action) 
+function load(string $controller, string $action, array $queryString) 
 {
     try 
     {
@@ -18,7 +18,7 @@ function load(string $controller, string $action)
             throw new Exception("O  método {$action} não existe no controller {$controller}");
         }
 
-        $controllerInstace->$action();
+       echo $controllerInstace->getPage($action,$queryString);
     }
     catch(Exception $e)
     {
@@ -28,29 +28,37 @@ function load(string $controller, string $action)
 
 $routes = [
     "GET" => [
-        URL_BASE => fn() => load("HomeController","teste"),
-        URL_BASE."home" => fn() => load("HomeController","teste"),
-        URL_BASE."teste" => fn() => load("HomeController","testando")
+        URL_BASE => fn($queryString) => load("HomeController","home",$queryString),
+        URL_BASE."teste" => fn($queryString) => load("HomeController","teste",$queryString)
     ]
 ];
 
 try 
 {
-    $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
     $request = $_SERVER["REQUEST_METHOD"];
+    $url = basename($_SERVER['REQUEST_URI']);
+    $page = parse_url($_SERVER["REQUEST_URI"])["path"];
+    $urlWithQueryString = parse_url($url);
+    $queryString = [];
+
+    if(array_key_exists("query",$urlWithQueryString))
+    {
+        parse_str(parse_url($url)['query'], $urlWithQueryString['query']);
+        $queryString = $urlWithQueryString['query'];
+    }
 
     if(!isset($routes[$request]))
     {
         throw new Exception("O method {$request} não existe");
     }
     
-    if(!array_key_exists($uri,$routes[$request]))
+    if(!array_key_exists($page,$routes[$request]))
     {
         include(__DIR__."/../public/404.php");
         exit;
     }
 
-    $routes[$request][$uri]();
+    $routes[$request][$page]($queryString);
 
 }
 catch(Exception $e)

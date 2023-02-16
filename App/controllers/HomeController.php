@@ -4,14 +4,35 @@ namespace TesteCrudApi\Controllers;
 class HomeController
 {
 
-    public function teste()
+    private array $queryString;
+
+    public function getPage($action,$queryString): mixed
     {
-        echo "<h1>HELLO WORLD</h1>";
+        $this->queryString = $queryString;
+        return $this->$action();
+    }
+
+    private function getQueryString($key): string
+    {
+        if(!empty($this->queryString))
+            if(array_key_exists($key,$this->queryString))
+                return $this->queryString[$key];
+
+        return "";
+    }
+
+    private function home(): mixed
+    {
+        $t = "<h1>HELLO WORLD</h1>";
+        $t .= $this->getQueryString("url");
+        return $t;
     }
     
-    public function testando()
+    private function teste(): mixed
     {
-        echo "<h1>TESTANDO</h1>";
+        $t = "<h1>TESTE</h1>";
+        $t .= $this->getQueryString("url");
+        return $t;
     }
 
 }
