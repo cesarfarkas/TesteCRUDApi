@@ -46,7 +46,8 @@ try
     
     if(!array_key_exists($uri,$routes[$request]))
     {
-        throw new Exception("A rota {$uri} não existe");
+        include(__DIR__."/../public/404.php");
+        exit;
     }
 
     $routes[$request][$uri]();
