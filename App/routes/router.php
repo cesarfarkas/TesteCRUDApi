@@ -4,7 +4,7 @@ function load(string $controller, string $action)
 {
     try 
     {
-        $controllerNamespace = "TesteCrudApi\\app\\controllers\\{$controller}";
+        $controllerNamespace = "TesteCrudApi\\controllers\\{$controller}";
         
         if(!class_exists(($controllerNamespace)))
         {
@@ -28,7 +28,9 @@ function load(string $controller, string $action)
 
 $routes = [
     "GET" => [
-        "/" => fn() => load("HomeController","index")
+        URL_BASE => fn() => load("HomeController","teste"),
+        URL_BASE."home" => fn() => load("HomeController","teste"),
+        URL_BASE."teste" => fn() => load("HomeController","testando")
     ]
 ];
 
@@ -36,11 +38,6 @@ try
 {
     $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
     $request = $_SERVER["REQUEST_METHOD"];
-
-    if($uri == URL_BASE)
-    {
-        $uri = "/";
-    }
 
     if(!isset($routes[$request]))
     {
@@ -52,7 +49,7 @@ try
         throw new Exception("A rota {$uri} não existe");
     }
 
-    $routes[$request][$uri];
+    $routes[$request][$uri]();
 
 }
 catch(Exception $e)
