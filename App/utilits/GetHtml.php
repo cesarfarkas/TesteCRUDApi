@@ -3,12 +3,20 @@ namespace TesteCrudApi\Utilits;
 
 class GetHtml
 {
-    static public string $getHtmlPathFile;
+    private static string $getHtmlPathFile;
 
     /**
      * Check if file html exists
      */
-    private function checkFileExists(): bool
+    static public function setHtmlPathFile($path): void
+    {
+        self::$getHtmlPathFile = $path;
+    }
+
+    /**
+     * Check if file html exists
+     */
+    static private function checkFileExists()
     {
         return file_exists(self::$getHtmlPathFile);
     }

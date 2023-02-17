@@ -1,6 +1,8 @@
 <?php
 namespace TesteCrudApi\Controllers;
 
+use TesteCrudApi\Utilits\GetHtml;
+
 class HomeController
 {
 
@@ -23,16 +25,9 @@ class HomeController
 
     private function home(): mixed
     {
-        $t = "<h1>HELLO WORLD</h1>";
-        $t .= $this->getQueryString("url");
-        return $t;
-    }
-    
-    private function teste(): mixed
-    {
-        $t = "<h1>TESTE</h1>";
-        $t .= $this->getQueryString("url");
-        return $t;
+        GetHtml::setHtmlPathFile(__DIR__."\..\public\home.php");
+        $page = GetHtml::view();
+        return $page;
     }
 
 }
