@@ -26,12 +26,19 @@ class GetHtml
      */
     static public function view(): string|bool
     {
-        if(self::checkFileExists())
+        try
         {
-            $contentHtml = file_get_contents(self::$getHtmlPathFile);
-            return $contentHtml;
-        }
+            if(self::checkFileExists())
+            {
+                $contentHtml = file_get_contents(self::$getHtmlPathFile);
+                return $contentHtml;
+            }
 
-        return false;
+            throw new \Exception("O arquivo ".self::$getHtmlPathFile." não existe ou o caminho está errado");
+
+        }catch(\Exception $e)
+        {
+            echo $e->getMessage();
+        }
     }
 }

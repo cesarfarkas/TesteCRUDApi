@@ -1,6 +1,7 @@
 <?php
 namespace TesteCrudApi\Controllers;
 
+use JsonException;
 use TesteCrudApi\Utilits\GetHtml;
 
 class HomeController
@@ -28,6 +29,24 @@ class HomeController
         GetHtml::setHtmlPathFile(__DIR__."\..\public\home.php");
         $page = GetHtml::view();
         return $page;
+    }
+
+    private function teste(): mixed
+    {
+        // clear the old headers
+        header_remove();
+        // set the header to make sure cache is forced
+        header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+        // treat this as json
+        header('Content-Type: application/json');
+
+        http_response_code(200);
+        return json_encode(
+            [
+                "status" => "success",
+                "message" => "Arquivos salvos",
+            ]
+        );
     }
 
 }
