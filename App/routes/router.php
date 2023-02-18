@@ -18,7 +18,7 @@ function load(string $controller, string $action, array $queryString)
             throw new Exception("O  método {$action} não existe no controller {$controller}");
         }
 
-       echo $controllerInstace->getPage($action,$queryString);
+       $controllerInstace->getPage($action,$queryString);
     }
     catch(Exception $e)
     {
@@ -54,7 +54,7 @@ try
     
     if(!array_key_exists($page,$routes[$request]))
     {
-        include(__DIR__."/../public/404.php");
+        include(__DIR__."/../views/404.php");
         exit;
     }
 
