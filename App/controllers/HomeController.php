@@ -34,7 +34,8 @@ class HomeController
             "httpResponseCode"=>200,
             "data" => ["status"=>"success","message"=>"Página teste carregada com sucesso"]
         ];
-        echo Helpers::json($data);
+        
+        Helpers::json($data);
     }
 
 }
