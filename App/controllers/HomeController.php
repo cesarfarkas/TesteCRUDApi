@@ -1,8 +1,7 @@
 <?php
 namespace TesteCrudApi\Controllers;
 
-use JsonException;
-use TesteCrudApi\Utilits\GetHtml;
+use TesteCrudApi\Utilits\Helpers;
 
 class HomeController
 {
@@ -31,7 +30,11 @@ class HomeController
 
     private function teste()
     {
-        include __DIR__."\\..\\views\\teste.php";
+        $data = [
+            "httpResponseCode"=>200,
+            "data" => ["status"=>"success","message"=>"Página teste carregada com sucesso"]
+        ];
+        echo Helpers::json($data);
     }
 
 }
