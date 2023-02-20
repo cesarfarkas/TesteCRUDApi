@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Fev-2023 às 05:47
+-- Tempo de geração: 20-Fev-2023 às 04:46
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.2.0
 
@@ -115,7 +115,9 @@ ALTER TABLE `produtos_usuarios`
 -- Índices para tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email_unique` (`email`),
+  ADD UNIQUE KEY `cpf_unique` (`cpf`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
