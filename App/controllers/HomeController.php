@@ -47,7 +47,7 @@ class HomeController
         $addUser->cpf = $this->request['cpf'];
         $addUser->senha = $this->request['senha'];
 
-        if(!$addUser->cadastrar())
+        if(!$addUser->insert())
         {
             $data = [
                 "httpResponseCode"=>400,
@@ -65,6 +65,48 @@ class HomeController
             "data" => [
                 "status" => "success",
                 "message" => "Usuário cadastrado com sucesso"
+            ]
+        ];
+        
+        Helpers::json($data);
+    }
+
+    private function deleteUser()
+    {
+        if(empty($this->request['id']))
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Não foi informado o ID do usuário"
+                ]
+            ];
+            
+            Helpers::json($data);
+        }
+
+        $deleteUser = new Usuarios();
+        $deleteUser->nome = $this->request['id'];
+
+        if(!$deleteUser->delete())
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Não foi possível excluír o usuário"
+                ]
+            ];
+            
+            Helpers::json($data);
+        }
+
+        $data = [
+            "httpResponseCode"=>200,
+            "data" => [
+                "status" => "success",
+                "message" => "Usuário excluído com sucesso"
             ]
         ];
         

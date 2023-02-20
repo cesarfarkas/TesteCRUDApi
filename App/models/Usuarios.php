@@ -60,7 +60,7 @@ class Usuarios
      * Método responsável por cadastrar uma nova vaga no banco
      * @return boolean
      */
-    public function cadastrar()
+    public function insert()
     {
         //INSERIR A VAGA NO BANCO
         $obDatabase = new Database($this->table);
@@ -79,7 +79,7 @@ class Usuarios
      * Método responsável por atualizar a vaga no banco
      * @return boolean
      */
-    public function atualizar()
+    public function update()
     {
         return (new Database($this->table))->update('id = ' . $this->id, [
             'nome' => $this->nome,
@@ -93,7 +93,7 @@ class Usuarios
      * Método responsável por excluir a vaga do banco
      * @return boolean
      */
-    public function excluir()
+    public function delete()
     {
         return (new Database($this->table))->delete('id = ' . $this->id);
     }
