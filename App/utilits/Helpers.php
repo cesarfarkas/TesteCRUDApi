@@ -13,5 +13,6 @@ class Helpers
         http_response_code($data['httpResponseCode']);
 
         echo json_encode($data['data']);
+        exit;
     }
 }

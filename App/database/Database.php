@@ -4,6 +4,7 @@ namespace TesteCrudApi\database;
 
 use \PDO;
 use \PDOException;
+use TesteCrudApi\Utilits\Helpers;
 
 class Database
 {
@@ -36,7 +37,7 @@ class Database
     private function setConnection()
     {
         try {
-            $this->connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_USER);
+            $this->connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die('ERROR: ' . $e->getMessage());
@@ -56,7 +57,15 @@ class Database
             $statement->execute($params);
             return $statement;
         } catch (PDOException $e) {
-            die('ERROR: ' . $e->getMessage());
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => $e->getMessage()
+                ]
+            ];
+            
+            Helpers::json($data);
         }
     }
 

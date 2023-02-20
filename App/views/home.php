@@ -26,30 +26,21 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia adipisci culpa aliquam esse tempore consequatur cum architecto ipsam nobis necessitatibus, neque at expedita officiis quasi sequi eveniet dignissimos quas voluptas?
         </div>
         <hr>
-        <table class="table table-hover">
+        <table class="table table-hover" id="listUsers">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th width="30%">Nome</th>
-                    <th>CPF/CNPJ</th>
-                    <th>Telefone</th>
-                    <th>Atualizado em</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>E-mail</th>
+                    <th>Senha</th>
                     <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>tiroles</td>
-                    <td>tiroles</td>
-                    <td>tiroles</td>
-                    <td>00 0000-0000</td>
-                    <td>00/00/0000</td>
-                    <td class="actions text-right">
-                        <a href="view.php?id=" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Visualizar</a>
-                        <a href="edit.php?id=" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Editar</a>
-                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal" data-customer="">
-                            <i class="fa fa-trash"></i> Excluir
-                        </a>
+                    <td colspan="6" align="center">
+                        <img src="https://media.tenor.com/64UaxgnTfx0AAAAC/memes-loading.gif" alt="loading">
                     </td>
                 </tr>
             </tbody>
@@ -57,6 +48,37 @@
     </div>
     
     <script src="<?=URL_ABSOLUTE;?>/app/public/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="<?=URL_ABSOLUTE;?>/app/public/js/jquery-3.6.3.min.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function()
+        {
+            const listUsuarios = `<?=URL_ABSOLUTE;?>usuarios`
+            
+            $.get(listUsuarios, function(data){
+                
+                $("#listUsers tbody tr").remove();
+
+                Object.values(data.data).forEach((value) => {
+                    var newRowContent = `
+                    <tr>
+                        <td>${value.id}</td>
+                        <td>${value.nome}</td>
+                        <td>${value.cpf}</td>
+                        <td>${value.email}</td>
+                        <td>${value.senha}</td>
+                        <td class="actions text-right">
+                            <a href="view.php?id=" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Visualizar</a>
+                            <a href="edit.php?id=" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+                            <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal" data-customer="">
+                                <i class="fa fa-trash"></i> Excluir
+                            </a>
+                        </td>
+                    </tr>`;
+                    $("#listUsers tbody").append(newRowContent); 
+                })
+            });
+        });
+    </script>
 </body>
 
 </html>

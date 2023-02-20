@@ -2,25 +2,18 @@
 namespace TesteCrudApi\Controllers;
 
 use TesteCrudApi\Utilits\Helpers;
+use TesteCrudApi\Models\Usuarios;
 
 class HomeController
 {
 
     private array $queryString;
+    private array $request;
 
-    public function getPage($action,$queryString): mixed
+    public function getPage(string $action, array $request): mixed
     {
-        $this->queryString = $queryString;
+        $this->request = $request;
         return $this->$action();
-    }
-
-    private function getQueryString($key): string
-    {
-        if(!empty($this->queryString))
-            if(array_key_exists($key,$this->queryString))
-                return $this->queryString[$key];
-
-        return "";
     }
 
     private function home()
@@ -28,14 +21,70 @@ class HomeController
         include __DIR__."\\..\\views\\home.php";
     }
 
-    private function teste()
+    private function addUser()
     {
+        if(
+            empty($this->request['nome']) || 
+            empty($this->request['email']) || 
+            empty($this->request['cpf']) || 
+            empty($this->request['senha'])
+        )
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Você precisa preencher todos os campos"
+                ]
+            ];
+            
+            Helpers::json($data);
+        }
+
+        $addUser = new Usuarios();
+        $addUser->nome = $this->request['nome'];
+        $addUser->email = $this->request['email'];
+        $addUser->cpf = $this->request['cpf'];
+        $addUser->senha = $this->request['senha'];
+
+        if(!$addUser->cadastrar())
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Não foi possível cadastrar o usuário"
+                ]
+            ];
+            
+            Helpers::json($data);
+        }
+
         $data = [
             "httpResponseCode"=>200,
-            "data" => ["status"=>"success","message"=>"Página teste carregada com sucesso"]
+            "data" => [
+                "status" => "success",
+                "message" => "Usuário cadastrado com sucesso"
+            ]
         ];
         
         Helpers::json($data);
     }
 
+    private function getUsers()
+    {
+        $getUsers = new Usuarios();
+        $getUsers = $getUsers->getUsuarios();
+        
+        $data = [
+            "httpResponseCode"=>200,
+            "data" => [
+                "status" => "success",
+                "message" => "Usuários carregados com sucesso",
+                "data" => $getUsers
+            ]
+        ];
+        
+        Helpers::json($data);
+    }
 }
