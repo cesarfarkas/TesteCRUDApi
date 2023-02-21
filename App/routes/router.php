@@ -29,7 +29,9 @@ function load(string $controller, string $action, array $request)
 $routes = [
     "GET" => [
         URL_BASE => fn($request) => load("HomeController","home",$request),
-        URL_BASE."usuarios" => fn($request) => load("HomeController","getUsers",$request)
+        URL_BASE."usuarios" => fn($request) => load("HomeController","getUsers",$request),
+        URL_BASE."api/usuario" => fn($request) => load("ApiController","getUser",$request),
+        URL_BASE."api/usuario/id" => fn($request) => load("ApiController","getUserId",$request)
     ],
     "POST" => [
         URL_BASE."usuario/inserir" => fn($request) => load("HomeController","insertUser",$request),
