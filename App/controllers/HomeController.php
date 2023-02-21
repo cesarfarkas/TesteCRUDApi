@@ -71,6 +71,58 @@ class HomeController
         Helpers::jsonResponse($data);
     }
 
+    private function updateUser()
+    {
+        if(
+            empty($this->request['id']) || 
+            empty($this->request['nome']) || 
+            empty($this->request['email']) || 
+            empty($this->request['cpf']) || 
+            empty($this->request['senha'])
+        )
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Você precisa preencher todos os campos"
+                ]
+            ];
+            
+            Helpers::jsonResponse($data);
+        }
+
+        $updateUser = new Usuarios();
+        $updateUser->id = $this->request['id'];
+        $updateUser->nome = $this->request['nome'];
+        $updateUser->email = $this->request['email'];
+        $updateUser->cpf = $this->request['cpf'];
+        $updateUser->senha = $this->request['senha'];
+
+        if(!$updateUser->update())
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Não foi possível alterar o usuário"
+                ]
+            ];
+            
+            Helpers::jsonResponse($data);
+        }
+
+        $data = [
+            "httpResponseCode"=>200,
+            "data" => [
+                "status" => "success",
+                "message" => "Usuário alterado com sucesso"
+            ]
+        ];
+        
+        Helpers::jsonResponse($data);
+    }
+
     private function deleteUser()
     {
 

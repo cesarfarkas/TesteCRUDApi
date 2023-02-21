@@ -34,7 +34,7 @@
                     <h2>Usuários</h2>
                 </div>
                 <div class="col-sm-10 text-right h2">
-                    <a class="btn btn-primary" href="#" id="btnInsertUser"><i class="fa fa-plus"></i>Novo Usuário</a>
+                    <a class="btn btn-primary" href="#" id="btnInsertUser" onclick="insertUser.formInsert()"><i class="fa fa-plus"></i>Novo Usuário</a>
                 </div>
             </div>
         </header>
@@ -99,7 +99,13 @@
                                         <td>${value.email}</td>
                                         <td>${value.senha}</td>
                                         <td class="actions text-right">
-                                            <a href="edit.php?id=" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+                                            <a 
+                                                href="#" 
+                                                class="btn btn-sm btn-warning"
+                                                onclick="updateUser.formUpdate(${value.id})"
+                                            >
+                                                <i class="fa fa-pencil"></i> Editar
+                                            </a>
                                             <a 
                                                 href="#" 
                                                 class="btn btn-sm btn-danger" 
@@ -107,8 +113,8 @@
                                                 data-target="#delete-modal" 
                                                 onclick="deleteUser.confirmDelete(${value.id})
                                             ">
-                                            <i class="fa fa-trash"></i> Excluir
-                                        </a>
+                                                <i class="fa fa-trash"></i> Excluir
+                                            </a>
                                         </td>
                                     </tr>`;
                             $(nameTable + " tbody").append(contentRow);
@@ -218,7 +224,7 @@
                     <div class="form-row">
                         <div class="form-group>
                             <label for="senha">Password</label>
-                            <input type="password" class="form-control" id="senha" placeholder="Password">
+                            <input type="text" class="form-control" id="senha" placeholder="Password">
                         </div>
                     </div>                    
                 </form>
@@ -286,15 +292,115 @@
                 });
             }
         }
+        
+        const updateUser = {
+            formUpdate(id) {
+                let modal = $('#alertModal');
+                let btnCancel = modal.find('#btnCancel');
+                let btnConfirm = modal.find('#btnConfirm');
+
+                let nameUser = document.querySelectorAll(`#user_${id} td`)[1].innerText;
+                let cpfUser = document.querySelectorAll(`#user_${id} td`)[2].innerText;
+                let emailUser = document.querySelectorAll(`#user_${id} td`)[3].innerText;
+                let senhaUser = document.querySelectorAll(`#user_${id} td`)[4].innerText;
+
+                let htmlContent = `
+                <form id="formUpdateUser">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome" placeholder="Nome" value="${nameUser}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" value="${cpfUser}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" value="${emailUser}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group>
+                            <label for="senha">Password</label>
+                            <input type="text" class="form-control" id="senha" placeholder="Password" value="${senhaUser}">
+                        </div>
+                    </div>                    
+                </form>
+                <div id="response" style="display:none;margin-top:20px;" role="alert"></div>
+                `;
+
+                $('#alertModal').modal('show');
+
+                modal.find('.modal-title').html('Editar Usuário');
+                modal.find('.modal-body').html(htmlContent);
+
+                btnCancel.show();
+                btnCancel.text('Cancelar').removeClass().addClass('btn btn-secondary');
+                btnCancel.off().on('click', (e) => {
+                    e.preventDefault();
+                    modal.modal('hide');
+                });
+
+                btnConfirm.show();
+                btnConfirm.text('Atualizar').removeClass().addClass('btn btn-success');
+                btnConfirm.off().on('click', (e) => {
+                    e.preventDefault();
+                    this.update('formUpdateUser',id);
+                });
+            },
+            update(nameForm,id)
+            {
+                let urlInsertUser = `<?= URL_ABSOLUTE; ?>usuario/update`;
+                let form = document.querySelectorAll(`#${nameForm}`)[0];
+                let formData = new FormData($(`#${nameForm}`).get(0));
+                let totalInputs = form.length;
+                for(let i = 0; i < totalInputs; i++)
+                {
+                    let inputName = form[i].id;
+                    let inputValue = form[i].value;
+                    formData.append(`${inputName}`,inputValue)
+                }
+                formData.append("id",id);
+
+                $.ajax({
+                    url: urlInsertUser,
+                    dataType: 'json',
+                    type: 'post',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        let modal = $('#alertModal');
+                        let divResponse = modal.find("#response");
+                        divResponse.removeClass().addClass("alert alert-warning").fadeIn();
+                        divResponse.html(`Enviando os dados do formulário`);
+                    },
+                    success: function(data) {
+                        let modal = $('#alertModal');
+                        let divResponse = modal.find("#response");
+                        divResponse.removeClass().addClass("alert alert-success").fadeIn();
+                        divResponse.html(`${data.message}`);
+                        loadUsers();
+                    },
+                    error: function(data) {
+                        let modal = $('#alertModal');
+                        let divResponse = modal.find("#response");
+                        divResponse.removeClass().addClass("alert alert-danger").fadeIn();
+                        divResponse.html(`${data.responseJSON.message}`);
+                    }
+                });
+            }
+        }
 
         $(document).ready(function() {
 
             // Lista usuários que estão no banco de dados
             loadUsers();
-
-            $("#btnInsertUser").on('click', () => {
-                insertUser.formInsert();
-            });
 
         });
     </script>

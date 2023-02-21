@@ -33,7 +33,8 @@ $routes = [
     ],
     "POST" => [
         URL_BASE."usuario/inserir" => fn($request) => load("HomeController","insertUser",$request),
-        URL_BASE."usuario/excluir" => fn($request) => load("HomeController","deleteUser",$request)
+        URL_BASE."usuario/excluir" => fn($request) => load("HomeController","deleteUser",$request),
+        URL_BASE."usuario/update" => fn($request) => load("HomeController","updateUser",$request)
     ]
 ];
 
