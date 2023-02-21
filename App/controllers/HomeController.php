@@ -21,7 +21,7 @@ class HomeController
         include __DIR__."\\..\\views\\home.php";
     }
 
-    private function addUser()
+    private function insertUser()
     {
         if(
             empty($this->request['nome']) || 
@@ -38,7 +38,7 @@ class HomeController
                 ]
             ];
             
-            Helpers::json($data);
+            Helpers::jsonResponse($data);
         }
 
         $addUser = new Usuarios();
@@ -57,7 +57,7 @@ class HomeController
                 ]
             ];
             
-            Helpers::json($data);
+            Helpers::jsonResponse($data);
         }
 
         $data = [
@@ -68,12 +68,12 @@ class HomeController
             ]
         ];
         
-        Helpers::json($data);
+        Helpers::jsonResponse($data);
     }
 
     private function deleteUser()
     {
-        
+
         if(empty($this->request['id']))
         {
             $data = [
@@ -84,7 +84,7 @@ class HomeController
                 ]
             ];
             
-            Helpers::json($data);
+            Helpers::jsonResponse($data);
         }
 
         $deleteUser = new Usuarios();
@@ -100,7 +100,7 @@ class HomeController
                 ]
             ];
             
-            Helpers::json($data);
+            Helpers::jsonResponse($data);
         }
 
         $data = [
@@ -111,7 +111,7 @@ class HomeController
             ]
         ];
         
-        Helpers::json($data);
+        Helpers::jsonResponse($data);
     }
 
     private function getUsers()
@@ -128,6 +128,6 @@ class HomeController
             ]
         ];
         
-        Helpers::json($data);
+        Helpers::jsonResponse($data);
     }
 }

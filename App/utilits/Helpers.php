@@ -4,7 +4,7 @@ namespace TesteCrudApi\Utilits;
 
 class Helpers
 {
-    public static function json(array $data)
+    public static function jsonResponse(array $data)
     {
         header_remove();
         header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");

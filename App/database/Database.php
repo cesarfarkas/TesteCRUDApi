@@ -57,15 +57,24 @@ class Database
             $statement->execute($params);
             return $statement;
         } catch (PDOException $e) {
+
+            $message = $e->getMessage();
+
+            if(mb_strpos($message, 'foreign key') !== false)
+                $message = "Você não pode editar e ou deletar esse registro, pois ele está vinculado a outro registro em outra tabela.<br> Exclua esses itens para excluir ou editar esse registro.";
+            
+            if(mb_strpos($message, 'Duplicate entry') !== false)
+                $message = "Você já inseriu esse registro. Não é permitido registros duplicados";
+
             $data = [
                 "httpResponseCode"=>400,
                 "data" => [
                     "status" => "error",
-                    "message" => $e->getMessage()
+                    "message" => $message
                 ]
             ];
             
-            Helpers::json($data);
+            Helpers::jsonResponse($data);
         }
     }
 

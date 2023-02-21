@@ -23,7 +23,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn" id="btnCancel" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn" id="btnConfirm"  data-dismiss="modal">Save changes</button>
+                        <button type="button" class="btn" id="btnConfirm" data-dismiss="modal">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -31,10 +31,10 @@
         <header>
             <div class="row">
                 <div class="col-sm-2">
-                    <h2>Clientes</h2>
+                    <h2>Usuários</h2>
                 </div>
                 <div class="col-sm-10 text-right h2">
-                    <a class="btn btn-primary" href="add.php"><i class="fa fa-plus"></i> Novo Cliente</a>
+                    <a class="btn btn-primary" href="#" id="btnInsertUser"><i class="fa fa-plus"></i>Novo Usuário</a>
                 </div>
             </div>
         </header>
@@ -65,6 +65,7 @@
             $.ajax({
                 url: urlListUsers,
                 dataType: 'json',
+                cache: false,
                 beforeSend: function() {
                     $(nameTable + " tbody tr").remove();
                     let contentRow = `
@@ -76,6 +77,7 @@
                     $(nameTable + " tbody").append(contentRow);
                 },
                 success: function(data) {
+                    console.log(data);
                     $(nameTable + " tbody tr").remove();
                     if (!data.data) {
                         let contentRow = `
@@ -128,9 +130,9 @@
 
         const deleteUser = {
             confirmDelete(id) {
-                
+
                 $('#alertModal').modal('show');
-                
+
                 let modal = $('#alertModal');
                 let nameUser = document.querySelectorAll(`#user_${id} td`)[1].innerText;
                 let btnCancel = modal.find('#btnCancel');
@@ -139,17 +141,17 @@
                 modal.find('.modal-title').html('Excluir usuário');
                 modal.find('.modal-body').html(`Você quer excluir o usuário?<br>
                                                 [id: <b>${id}</b>] <b>${nameUser}</b>`);
-                
+
                 btnCancel.show();
                 btnCancel.text('Cancelar').addClass('btn-secondary');
-                btnCancel.off().on('click',(e)=>{
+                btnCancel.off().on('click', (e) => {
                     e.preventDefault();
                     modal.modal('hide');
                 });
-                
+
                 btnConfirm.show();
                 btnConfirm.text('Excluir').addClass('btn-danger');
-                btnConfirm.off().on('click',(e)=>{
+                btnConfirm.off().on('click', (e) => {
                     e.preventDefault();
                     this.delete(id);
                 });
@@ -188,10 +190,111 @@
             }
         }
 
+        const insertUser = {
+            formInsert() {
+                let modal = $('#alertModal');
+                let btnCancel = modal.find('#btnCancel');
+                let btnConfirm = modal.find('#btnConfirm');
+                let htmlContent = `
+                <form id="formInsertUser">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome" placeholder="Nome">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group>
+                            <label for="senha">Password</label>
+                            <input type="password" class="form-control" id="senha" placeholder="Password">
+                        </div>
+                    </div>                    
+                </form>
+                <div id="response" style="display:none;margin-top:20px;" role="alert"></div>
+                `;
+
+                $('#alertModal').modal('show');
+
+                modal.find('.modal-title').html('Novo Usuário');
+                modal.find('.modal-body').html(htmlContent);
+
+                btnCancel.show();
+                btnCancel.text('Cancelar').removeClass().addClass('btn btn-secondary');
+                btnCancel.off().on('click', (e) => {
+                    e.preventDefault();
+                    modal.modal('hide');
+                });
+
+                btnConfirm.show();
+                btnConfirm.text('Adicionar').removeClass().addClass('btn btn-success');
+                btnConfirm.off().on('click', (e) => {
+                    e.preventDefault();
+                    this.insert('formInsertUser');
+                });
+            },
+            insert(nameForm)
+            {
+                let urlInsertUser = `<?= URL_ABSOLUTE; ?>usuario/inserir`;
+                let form = document.querySelectorAll(`#${nameForm}`)[0];
+                let formData = new FormData($(`#${nameForm}`).get(0));
+                let totalInputs = form.length;
+                for(let i = 0; i < totalInputs; i++)
+                {
+                    let inputName = form[i].id;
+                    let inputValue = form[i].value;
+                    formData.append(`${inputName}`,inputValue)
+                }
+
+                $.ajax({
+                    url: urlInsertUser,
+                    dataType: 'json',
+                    type: 'post',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        let modal = $('#alertModal');
+                        let divResponse = modal.find("#response");
+                        divResponse.removeClass().addClass("alert alert-warning").fadeIn();
+                        divResponse.html(`Enviando os dados do formulário`);
+                    },
+                    success: function(data) {
+                        let modal = $('#alertModal');
+                        let divResponse = modal.find("#response");
+                        divResponse.removeClass().addClass("alert alert-success").fadeIn();
+                        divResponse.html(`${data.message}`);
+                        loadUsers();
+                    },
+                    error: function(data) {
+                        let modal = $('#alertModal');
+                        let divResponse = modal.find("#response");
+                        divResponse.removeClass().addClass("alert alert-danger").fadeIn();
+                        divResponse.html(`${data.responseJSON.message}`);
+                    }
+                });
+            }
+        }
+
         $(document).ready(function() {
 
             // Lista usuários que estão no banco de dados
             loadUsers();
+
+            $("#btnInsertUser").on('click', () => {
+                insertUser.formInsert();
+            });
 
         });
     </script>

@@ -32,7 +32,7 @@ $routes = [
         URL_BASE."usuarios" => fn($request) => load("HomeController","getUsers",$request)
     ],
     "POST" => [
-        URL_BASE."usuario/cadastrar" => fn($request) => load("HomeController","addUser",$request),
+        URL_BASE."usuario/inserir" => fn($request) => load("HomeController","insertUser",$request),
         URL_BASE."usuario/excluir" => fn($request) => load("HomeController","deleteUser",$request)
     ]
 ];
