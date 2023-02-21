@@ -1,3 +1,7 @@
+<?php 
+    if($requesMethod == "GET")
+    { 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,3 +27,17 @@
     </section>
 </body>
 </html>
+<?php 
+    }else{
+        header_remove();
+        header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+        header('Content-Type: application/json');
+
+        http_response_code(400);
+
+        $data = [
+                    "status" => "error",
+                    "message" => "404 page ($page) not found",
+                ];
+        echo json_encode($data);
+    }
