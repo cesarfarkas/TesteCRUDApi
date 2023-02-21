@@ -73,13 +73,14 @@ class HomeController
 
     private function deleteUser()
     {
+        
         if(empty($this->request['id']))
         {
             $data = [
                 "httpResponseCode"=>400,
                 "data" => [
                     "status" => "error",
-                    "message" => "Não foi informado o ID do usuário"
+                    "message" => "Erro: Não foi informado o ID do usuário"
                 ]
             ];
             
@@ -87,7 +88,7 @@ class HomeController
         }
 
         $deleteUser = new Usuarios();
-        $deleteUser->nome = $this->request['id'];
+        $deleteUser->id = $this->request['id'];
 
         if(!$deleteUser->delete())
         {
@@ -95,7 +96,7 @@ class HomeController
                 "httpResponseCode"=>400,
                 "data" => [
                     "status" => "error",
-                    "message" => "Não foi possível excluír o usuário"
+                    "message" => "Erro: Não foi possível excluír o usuário"
                 ]
             ];
             
