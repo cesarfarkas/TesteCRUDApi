@@ -1,6 +1,6 @@
 <?php
 
-namespace TesteCrudApi\database;
+namespace TesteCrudApi\Database;
 
 use \PDO;
 use \PDOException;
@@ -28,6 +28,7 @@ class Database
     public function __construct($table = null)
     {
         $this->table = $table;
+        $this->connection = null;
         $this->setConnection();
     }
 
@@ -36,10 +37,12 @@ class Database
      */
     private function setConnection()
     {
-        try {
+        try 
+        {
             $this->connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
+        }catch(PDOException $e) 
+        {
             die('ERROR: ' . $e->getMessage());
         }
     }
@@ -158,4 +161,5 @@ class Database
         //RETORNA SUCESSO
         return true;
     }
+    
 }

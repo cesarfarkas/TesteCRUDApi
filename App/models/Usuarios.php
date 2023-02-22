@@ -12,7 +12,7 @@ class Usuarios
      * Nome da tabela baseado no nome da classe
      * @var string
      */
-    private $table;
+    private $table = "usuarios";
 
     /**
      * Nome do usuário
@@ -43,18 +43,6 @@ class Usuarios
      * @var string
      */
     public $senha;
-
-    function __construct()
-    {
-        $tableName = explode(
-            "\\",
-            mb_strtolower(
-                get_class($this)
-            )
-        );
-
-        $this->table = $tableName[count($tableName)-1];
-    }
 
     /**
      * Método responsável por cadastrar uma nova vaga no banco
