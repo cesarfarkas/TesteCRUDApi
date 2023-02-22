@@ -22,18 +22,18 @@ class ApiController
     {
         if(
             empty($this->request['id'])
-            )
-            {
-                $data = [
-                    "httpResponseCode"=>400,
-                    "data" => [
-                        "status" => "error",
-                        "message" => "ID do usuário não informado"
-                        ]
-                    ];
-                    
-                    Helpers::jsonResponse($data);
-                }
+        )
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "ID do usuário não informado"
+                    ]
+                ];
+                
+                Helpers::jsonResponse($data);
+            }
                 
         $idUser = $this->request['id'];
 
@@ -92,6 +92,52 @@ class ApiController
     
     private function getUser()
     {
-        echo "Teste";
+        $email = empty($this->request['email'])? "" : $this->request['email'];
+        $cpf = empty($this->request['cpf'])? "" : $this->request['cpf'];
+        $senha = empty($this->request['senha'])? "" : $this->request['senha'];
+
+        if(
+            (empty($email) && empty($cpf)) || 
+            empty($senha)
+        )
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Informe o usuário e senha"
+                ]
+            ];
+            
+            Helpers::jsonResponse($data);
+        }
+            
+        
+        $getUser = new Usuarios();
+        $getUser = $getUser->getUsuarioLogin($email,$cpf,$senha);
+        
+        if(empty($getUser))
+        {
+            $data = [
+                "httpResponseCode"=>400,
+                "data" => [
+                    "status" => "error",
+                    "message" => "Usuário e ou senha incorretos"
+                ]
+            ];
+            
+            Helpers::jsonResponse($data);
+        }
+
+        $data = [
+            "httpResponseCode"=>200,
+            "data" => [
+                "status" => "success",
+                "message" => "Usuário carregado com sucesso",
+                "data" => $getUser
+            ]
+        ];
+        
+        Helpers::jsonResponse($data);
     }
 }

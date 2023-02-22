@@ -109,4 +109,15 @@ class Usuarios
         return (new Database($this->table))->select('id = ' . $id)
             ->fetchObject(self::class);
     }
+
+    /**
+     * Método responsável por buscar uma vaga com base em seu ID
+     * @param  integer $id
+     * @return user
+     */
+    public function getUsuarioLogin($email,$cpf,$senha)
+    {
+        return (new Database($this->table))->select("(email = '$email' || cpf = '$cpf') and senha = '$senha'")
+            ->fetchObject(self::class);
+    }
 }
