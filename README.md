@@ -41,7 +41,8 @@ Dados as tabelas acima faça ( PHP puro  - sem framework) :
 2. Baixe os arquivos desse repositório
 3. Importe o SQL testecrudapi.sql que está no diretório raiz
 4. Configure o arquivo .env fazendo uma cópia do .env-example
-5. Acesse a URL do projeto no seu computador
+5. Não esqueça de dar update no composer para instalar as dependências
+6. Acesse a URL do projeto no seu computador
 
 ## Testar EndPoints
 1. Rota GET onde informado o id do usuário retorna os dados dele mais produtos
